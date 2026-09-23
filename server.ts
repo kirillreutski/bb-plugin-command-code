@@ -57,7 +57,10 @@ export default function plugin(bb: BbPluginApi) {
     },
     // Hidden until `command-code-acp` is on the machine's PATH.
     experimental_visibility: "installed",
-    maintenance: { health: true, usage: false, installation: false },
+    // usage: true — host.ts intercepts provider/usage and answers it from
+    // Command Code's own /alpha/billing API directly (see src/usage.mjs);
+    // the ACP bridge's "generic" dialect has no maintenance hook for it.
+    maintenance: { health: true, usage: true, installation: false },
     capabilities: {
       supportsServiceTier: false,
       supportsNativeUserQuestion: false,
